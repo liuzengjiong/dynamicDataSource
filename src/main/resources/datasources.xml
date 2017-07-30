@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<cims>  
+	<dbs>
+	    <db>  
+	    	<logicname>db0</logicname>
+	        <driver>com.mysql.jdbc.Driver</driver>  
+	        <url>jdbc:mysql://119.29.10.25:3306/db1</url>  
+	        <username>cims</username>  
+	        <password>cims</password>  
+	    </db>
+	    
+	   	<db>  
+	   		<logicname>db1</logicname>
+	        <driver>com.mysql.jdbc.Driver</driver>  
+	        <url>jdbc:mysql://119.29.10.25:3306/db2</url>  
+	        <username>cims</username>  
+	        <password>cims</password>  
+	    </db>
+	    
+	    	    
+	   	<db>  
+	   		<logicname>db2</logicname>
+	        <driver>com.mysql.jdbc.Driver</driver>  
+	        <url>jdbc:mysql://119.29.10.25:3306/db3</url>  
+	        <username>cims</username>  
+	        <password>cims</password>  
+	    </db>
+    </dbs>
+</cims>  
+
+<bean id="dataSourceOne" class="com.mchange.v2.c3p0.ComboPooledDataSource"  
+        destroy-method="close">  
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />  
+        <property name="jdbcUrl" value="jdbc:mysql://119.29.10.25:3306/db1" />  
+        <property name="user" value="cims" />  
+        <property name="password" value="cims" />  
+</bean>  
+
+
+<bean id="dataSourceTwo" class="com.mchange.v2.c3p0.ComboPooledDataSource"  
+        destroy-method="close">  
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />  
+        <property name="jdbcUrl" value="jdbc:mysql://119.29.10.25:3306/db2" />  
+        <property name="user" value="cims" />  
+        <property name="password" value="cims" />  
+</bean>     
+
+    <bean id="logicDataSource" class="org.lzj.dynamicDataSource.LogicDataSource">  
+        <property name="targetDataSources">  
+            <map key-type="java.lang.String">  
+                <entry value-ref="dataSourceOne" key="dataSourceOne"></entry>  
+                <entry value-ref="dataSourceTwo" key="dataSourceTwo"></entry>  
+            </map>  
+        </property>  
+        <property name="defaultTargetDataSource" ref="dataSourceOne">  
+        </property>  
+    </bean>  
